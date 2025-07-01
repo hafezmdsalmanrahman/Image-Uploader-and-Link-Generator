@@ -4,9 +4,6 @@ A modern, user-friendly web application for easily uploading images and generati
 
 ### [View Live Demo](https://hafezmdsalmanrahman.github.io/Image-Uploader-and-Link-Generator/)  *(Add your live demo link here)*
 
-![Project Screenshot](screenshot.png) 
-*(Note: Add a screenshot of your project to the repository and name it https://i.ibb.co/tpcShB1b/1744452357972.jpg)*
-
 ---
 
 ## 🚀 Key Features
