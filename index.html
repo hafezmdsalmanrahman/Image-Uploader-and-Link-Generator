@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Link Generator</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Hind Siliguri', sans-serif;
+            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow-x: hidden;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        /* Enhanced Glassmorphism Class */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen text-slate-100 p-4">
+
+    <!-- === কপি সাকসেস পপআপ === -->
+    <div id="copy-success-popup" class="fixed top-0 left-1/2 -translate-x-1/2 -translate-y-full w-full max-w-sm p-4 transition-transform duration-500 ease-in-out z-50">
+        <div class="bg-white rounded-xl shadow-2xl p-4 flex items-center gap-4 border border-slate-200">
+            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                <i class="fa-solid fa-check text-lg text-green-600"></i>
+            </div>
+            <div class="flex-grow">
+                <p class="font-bold text-slate-800">সফলভাবে কপি হয়েছে</p>
+                <p class="text-sm text-slate-500">লিঙ্কটি এখন ব্যবহারের জন্য প্রস্তুত।</p>
+            </div>
+        </div>
+    </div>
+    <!-- === পপআপ শেষ === -->
+
+    <main class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Left Panel: Upload Area -->
+        <div id="upload-panel" class="glass-panel p-8 flex flex-col justify-center">
+            <header class="mb-8 text-center md:text-left">
+                <h1 class="text-4xl font-bold tracking-tight text-white">ইমেজ লিঙ্ক জেনারেটর</h1>
+                <p class="text-white/70 mt-3 text-lg">ছবি আপলোড করে সরাসরি লিঙ্ক তৈরি করুন।</p>
+            </header>
+            
+            <div id="drop-zone" class="relative block w-full border-2 border-dashed border-white/30 rounded-2xl p-12 text-center cursor-pointer hover:border-blue-400 hover:bg-white/10 transition-all duration-300">
+                <div class="flex flex-col items-center">
+                    <i class="fa-solid fa-cloud-arrow-up text-5xl text-blue-300 mb-4"></i>
+                    <p class="text-white font-semibold text-lg">ছবি এখানে টেনে আনুন অথবা <span class="text-blue-300">ব্রাউজ করুন</span></p>
+                    <p class="text-xs text-white/60 mt-2">PNG, JPG, GIF (সর্বোচ্চ 10MB)</p>
+                </div>
+            </div>
+            <input type="file" id="file-input" class="hidden" accept="image/*">
+        </div>
+
+        <!-- Right Panel: Output Area -->
+        <div id="output-panel" class="glass-panel p-8 flex items-center justify-center">
+            
+            <!-- Placeholder View -->
+            <div id="placeholder-view" class="text-center">
+                 <i class="fa-solid fa-photo-film text-6xl text-white/40 mb-4"></i>
+                 <h2 class="text-2xl font-semibold text-white/80">ফলাফল এখানে দেখুন</h2>
+                 <p class="text-white/60 mt-2">আপনার ছবির প্রিভিউ এবং লিঙ্কগুলো এখানে প্রদর্শিত হবে।</p>
+            </div>
+
+            <!-- Results View -->
+            <div id="results-view" class="hidden w-full h-full flex flex-col">
+                <!-- Preview & Progress Area -->
+                <div id="preview-area" class="text-center flex-grow flex flex-col items-center justify-center">
+                    <img id="image-preview" src="" class="max-h-48 max-w-full mx-auto rounded-lg shadow-lg mb-4 border-2 border-white/30">
+                    <div id="progress-wrapper" class="w-full max-w-sm mx-auto bg-white/20 rounded-full h-2.5 mt-4">
+                        <div id="progress-bar" class="bg-blue-400 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                    <p id="progress-text" class="text-blue-300 font-semibold mt-2"></p>
+                </div>
+                
+                <!-- Links Area (Initially Hidden) -->
+                <div id="links-container" class="hidden w-full space-y-4 mt-6">
+                    <!-- Direct Link -->
+                    <div class="space-y-2 text-left">
+                        <label class="font-semibold text-white/90 flex items-center gap-2 text-sm"><i class="fa-solid fa-link text-blue-300"></i> সরাসরি লিঙ্ক</label>
+                        <div class="flex">
+                            <input type="text" id="direct-link" readonly class="w-full p-3 rounded-l-md bg-black/20 text-white/90 border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all">
+                            <button onclick="copyLink('direct-link')" class="bg-blue-600 text-white px-4 rounded-r-md hover:bg-blue-700 transition-colors"><i class="fa-regular fa-copy"></i></button>
+                        </div>
+                    </div>
+                     <!-- HTML Link -->
+                    <div class="space-y-2 text-left">
+                        <label class="font-semibold text-white/90 flex items-center gap-2 text-sm"><i class="fa-solid fa-code text-blue-300"></i> HTML কোড</label>
+                        <div class="flex">
+                            <input type="text" id="html-link" readonly class="w-full p-3 rounded-l-md bg-black/20 text-white/90 border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all">
+                            <button onclick="copyLink('html-link')" class="bg-blue-600 text-white px-4 rounded-r-md hover:bg-blue-700 transition-colors"><i class="fa-regular fa-copy"></i></button>
+                        </div>
+                    </div>
+                    <!-- Reset Button -->
+                    <button id="reset-btn" class="w-full bg-white/10 text-white font-semibold py-3 px-6 rounded-lg hover:bg-white/20 transition-colors mt-4">
+                        <i class="fa-solid fa-arrow-rotate-left mr-2"></i>অন্য ছবি আপলোড করুন
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // --- API Key ---
+        // IMPORTANT: Get your free API key from https://api.imgbb.com and paste it here.
+        const apiKey = '998c0b82ba2941d02d85d9132d9593a5'; // অনুগ্রহ করে এখানে আপনার ImgBB API Key যুক্ত করুন
+
+        // --- DOM Elements ---
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const placeholderView = document.getElementById('placeholder-view');
+        const resultsView = document.getElementById('results-view');
+        const previewArea = document.getElementById('preview-area');
+        const imagePreview = document.getElementById('image-preview');
+        const progressWrapper = document.getElementById('progress-wrapper');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const linksContainer = document.getElementById('links-container');
+        const resetBtn = document.getElementById('reset-btn');
+        const copySuccessPopup = document.getElementById('copy-success-popup');
+        
+        let popupTimeout;
+
+        // --- Event Listeners ---
+        dropZone.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', e => handleFile(e.target.files[0]));
+        dropZone.addEventListener('dragover', e => { e.preventDefault(); e.stopPropagation(); dropZone.classList.add('border-blue-400', 'bg-white/10'); });
+        dropZone.addEventListener('dragleave', e => { e.preventDefault(); e.stopPropagation(); dropZone.classList.remove('border-blue-400', 'bg-white/10'); });
+        dropZone.addEventListener('drop', e => {
+            e.preventDefault(); e.stopPropagation();
+            dropZone.classList.remove('border-blue-400', 'bg-white/10');
+            handleFile(e.dataTransfer.files[0]);
+        });
+        resetBtn.addEventListener('click', resetUI);
+
+        // --- Core Functions ---
+        function showResultsView() {
+            placeholderView.classList.add('hidden');
+            resultsView.classList.remove('hidden');
+            previewArea.classList.remove('hidden');
+            progressWrapper.classList.remove('hidden');
+            linksContainer.classList.add('hidden');
+        }
+
+        function handleFile(file) {
+            if (!apiKey || apiKey === 'YOUR_API_KEY_HERE') {
+                alert('অনুগ্রহ করে স্ক্রিপ্টে আপনার ImgBB API Key যুক্ত করুন।');
+                return;
+            }
+            if (file && file.type.startsWith('image/')) {
+                showResultsView();
+                const reader = new FileReader();
+                reader.onload = e => {
+                    imagePreview.src = e.target.result;
+                    uploadFile(file);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function uploadFile(file) {
+            const formData = new FormData();
+            formData.append('image', file);
+            progressText.textContent = 'আপলোড হচ্ছে...';
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', `https://api.imgbb.com/1/upload?key=${apiKey}`, true);
+            
+            xhr.upload.onprogress = e => {
+                if (e.lengthComputable) {
+                    const percent = Math.round((e.loaded / e.total) * 100);
+                    progressBar.style.width = `${percent}%`;
+                    progressText.textContent = `আপলোড হচ্ছে... ${percent}%`;
+                }
+            };
+            
+            xhr.onload = function() {
+                if (this.status === 200) {
+                    const res = JSON.parse(this.responseText);
+                    if (res.success) {
+                        displayResults(res.data);
+                    } else {
+                        alert('আপলোড ব্যর্থ: ' + res.error?.message);
+                        resetUI();
+                    }
+                } else {
+                    alert('সার্ভার এরর: ' + this.status);
+                    resetUI();
+                }
+            };
+            xhr.send(formData);
+        }
+        
+        function displayResults(data) {
+            progressWrapper.classList.add('hidden');
+            progressText.textContent = 'সফলভাবে আপলোড হয়েছে!';
+            
+            document.getElementById('direct-link').value = data.url;
+            document.getElementById('html-link').value = `<img src="${data.url}" alt="image">`;
+            
+            linksContainer.classList.remove('hidden');
+        }
+        
+        // --- UPDATED AND FIXED copyLink FUNCTION ---
+        function copyLink(elementId) {
+            const input = document.getElementById(elementId);
+            
+            // Modern clipboard API for secure contexts (HTTPS, localhost)
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(input.value).then(showCopySuccessPopup);
+            } else {
+                // Fallback for insecure contexts (like file://) or older browsers
+                input.select();
+                input.setSelectionRange(0, 99999); // For mobile devices
+                try {
+                    document.execCommand('copy');
+                    showCopySuccessPopup(); // Show success even on fallback
+                } catch (err) {
+                    console.error('Fallback copy failed:', err);
+                    alert('দুঃখিত, লিঙ্কটি কপি করা যায়নি।');
+                }
+                // Deselect the text after copying
+                window.getSelection().removeAllRanges();
+            }
+        }
+        
+        // Helper function to show the popup
+        function showCopySuccessPopup() {
+            copySuccessPopup.classList.remove('-translate-y-full');
+            copySuccessPopup.classList.add('translate-y-5');
+            clearTimeout(popupTimeout);
+            popupTimeout = setTimeout(() => {
+                copySuccessPopup.classList.remove('translate-y-5');
+                copySuccessPopup.classList.add('-translate-y-full');
+            }, 3000);
+        }
+
+        function resetUI() {
+            fileInput.value = '';
+            progressBar.style.width = '0%';
+            progressText.textContent = '';
+            imagePreview.src = '';
+            
+            resultsView.classList.add('hidden');
+            placeholderView.classList.remove('hidden');
+        }
+    </script>
+
+</body>
+</html>
