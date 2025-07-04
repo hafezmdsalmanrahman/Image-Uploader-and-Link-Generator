@@ -2,42 +2,31 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Image Link Generator</title>
-    <!-- Tailwind CSS CDN -->
+
+    <!-- Monetag Ad Script -->
+    <script src='//libtl.com/sdk.js' data-zone='9528592' data-sdk='show_9528592'></script>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --tg-bg-color: #0f0c29; --tg-text-color: #ffffff; --tg-hint-color: rgba(255, 255, 255, 0.6); --tg-link-color: #6ea8ff; --tg-button-color: #3b82f6; --tg-button-text-color: #ffffff; --tg-secondary-bg-color: rgba(255, 255, 255, 0.1); --tg-border-color: rgba(255, 255, 255, 0.18);
+        }
         body {
-            font-family: 'Inter', 'Hind Siliguri', sans-serif;
-            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            overflow-x: hidden;
+            font-family: 'Inter', 'Hind Siliguri', sans-serif; background-color: var(--tg-bg-color); color: var(--tg-text-color); transition: background-color 0.3s ease, color 0.3s ease; overflow-x: hidden;
         }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        /* Enhanced Glassmorphism Class */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 1.5rem;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            transition: all 0.3s ease;
+            background: var(--tg-secondary-bg-color); border-radius: 1.5rem; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--tg-border-color); transition: all 0.3s ease;
         }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen text-slate-100 p-4">
+<body class="flex items-center justify-center min-h-screen p-4">
 
     <!-- === কপি সাকসেস পপআপ === -->
     <div id="copy-success-popup" class="fixed top-0 left-1/2 -translate-x-1/2 -translate-y-full w-full max-w-sm p-4 transition-transform duration-500 ease-in-out z-50">
@@ -54,92 +43,221 @@
     <!-- === পপআপ শেষ === -->
 
     <main class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-        
         <!-- Left Panel: Upload Area -->
         <div id="upload-panel" class="glass-panel p-8 flex flex-col justify-center">
             <header class="mb-8 text-center md:text-left">
-                <h1 class="text-4xl font-bold tracking-tight text-white">ইমেজ লিঙ্ক জেনারেটর</h1>
-                <p class="text-white/70 mt-3 text-lg">ছবি আপলোড করে সরাসরি লিঙ্ক তৈরি করুন।</p>
+                <h1 class="text-4xl font-bold tracking-tight" style="color: var(--tg-text-color);">ইমেজ লিঙ্ক জেনারেটর</h1>
+                <p class="mt-3 text-lg" style="color: var(--tg-hint-color);">ছবি আপলোড করে সরাসরি লিঙ্ক তৈরি করুন।</p>
             </header>
-            
-            <div id="drop-zone" class="relative block w-full border-2 border-dashed border-white/30 rounded-2xl p-12 text-center cursor-pointer hover:border-blue-400 hover:bg-white/10 transition-all duration-300">
+            <div id="drop-zone" class="relative block w-full border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer hover:border-blue-400 hover:bg-white/10 transition-all duration-300" style="border-color: var(--tg-hint-color);">
                 <div class="flex flex-col items-center">
-                    <i class="fa-solid fa-cloud-arrow-up text-5xl text-blue-300 mb-4"></i>
-                    <p class="text-white font-semibold text-lg">ছবি এখানে টেনে আনুন অথবা <span class="text-blue-300">ব্রাউজ করুন</span></p>
-                    <p class="text-xs text-white/60 mt-2">PNG, JPG, GIF (সর্বোচ্চ 10MB)</p>
+                    <i class="fa-solid fa-cloud-arrow-up text-5xl text-blue-300 mb-4" style="color: var(--tg-link-color);"></i>
+                    <p class="font-semibold text-lg" style="color: var(--tg-text-color);">ছবি এখানে টেনে আনুন অথবা <span style="color: var(--tg-link-color);">ব্রাউজ করুন</span></p>
+                    <p class="text-xs mt-2" style="color: var(--tg-hint-color);">PNG, JPG, GIF (সর্বোচ্চ 10MB)</p>
                 </div>
             </div>
             <input type="file" id="file-input" class="hidden" accept="image/*">
         </div>
-
         <!-- Right Panel: Output Area -->
         <div id="output-panel" class="glass-panel p-8 flex items-center justify-center">
-            
-            <!-- Placeholder View -->
             <div id="placeholder-view" class="text-center">
-                 <i class="fa-solid fa-photo-film text-6xl text-white/40 mb-4"></i>
-                 <h2 class="text-2xl font-semibold text-white/80">ফলাফল এখানে দেখুন</h2>
-                 <p class="text-white/60 mt-2">আপনার ছবির প্রিভিউ এবং লিঙ্কগুলো এখানে প্রদর্শিত হবে।</p>
+                 <i class="fa-solid fa-photo-film text-6xl text-white/40 mb-4" style="color: var(--tg-hint-color);"></i>
+                 <h2 class="text-2xl font-semibold" style="color: var(--tg-text-color);">ফলাফল এখানে দেখুন</h2>
+                 <p class="mt-2" style="color: var(--tg-hint-color);">আপনার ছবির প্রিভিউ এবং লিঙ্কগুলো এখানে প্রদর্শিত হবে।</p>
             </div>
-
-            <!-- Results View -->
             <div id="results-view" class="hidden w-full h-full flex flex-col">
-                <!-- Preview & Progress Area -->
                 <div id="preview-area" class="text-center flex-grow flex flex-col items-center justify-center">
-                    <img id="image-preview" src="" class="max-h-48 max-w-full mx-auto rounded-lg shadow-lg mb-4 border-2 border-white/30">
-                    <div id="progress-wrapper" class="w-full max-w-sm mx-auto bg-white/20 rounded-full h-2.5 mt-4">
-                        <div id="progress-bar" class="bg-blue-400 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                    <img id="image-preview" src="" class="max-h-48 max-w-full mx-auto rounded-lg shadow-lg mb-4" style="border: 2px solid var(--tg-border-color);">
+                    <div id="progress-wrapper" class="w-full max-w-sm mx-auto bg-black/20 rounded-full h-2.5 mt-4" style="background-color: rgba(var(--tg-secondary-bg-rgb), 0.5);">
+                        <div id="progress-bar" class="h-2.5 rounded-full transition-all duration-300" style="width: 0%; background-color: var(--tg-link-color);"></div>
                     </div>
-                    <p id="progress-text" class="text-blue-300 font-semibold mt-2"></p>
+                    <p id="progress-text" class="font-semibold mt-2" style="color: var(--tg-link-color);"></p>
                 </div>
                 
-                <!-- Links Area (Initially Hidden) -->
-                <div id="links-container" class="hidden w-full space-y-4 mt-6">
-                    <!-- Direct Link -->
-                    <div class="space-y-2 text-left">
-                        <label class="font-semibold text-white/90 flex items-center gap-2 text-sm"><i class="fa-solid fa-link text-blue-300"></i> সরাসরি লিঙ্ক</label>
-                        <div class="flex">
-                            <input type="text" id="direct-link" readonly class="w-full p-3 rounded-l-md bg-black/20 text-white/90 border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all">
-                            <button onclick="copyLink('direct-link')" class="bg-blue-600 text-white px-4 rounded-r-md hover:bg-blue-700 transition-colors"><i class="fa-regular fa-copy"></i></button>
-                        </div>
-                    </div>
-                     <!-- HTML Link -->
-                    <div class="space-y-2 text-left">
-                        <label class="font-semibold text-white/90 flex items-center gap-2 text-sm"><i class="fa-solid fa-code text-blue-300"></i> HTML কোড</label>
-                        <div class="flex">
-                            <input type="text" id="html-link" readonly class="w-full p-3 rounded-l-md bg-black/20 text-white/90 border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all">
-                            <button onclick="copyLink('html-link')" class="bg-blue-600 text-white px-4 rounded-r-md hover:bg-blue-700 transition-colors"><i class="fa-regular fa-copy"></i></button>
-                        </div>
-                    </div>
-                    <!-- Reset Button -->
-                    <button id="reset-btn" class="w-full bg-white/10 text-white font-semibold py-3 px-6 rounded-lg hover:bg-white/20 transition-colors mt-4">
-                        <i class="fa-solid fa-arrow-rotate-left mr-2"></i>অন্য ছবি আপলোড করুন
+                <!-- === লিঙ্ক লক করার নতুন ডিজাইন === -->
+                <div id="ad-lock-container" class="hidden w-full space-y-4 mt-6 text-center p-6 rounded-2xl" style="background: rgba(0,0,0,0.2);">
+                    <i class="fa-solid fa-lock text-4xl text-yellow-400 mb-3"></i>
+                    <h3 class="text-xl font-bold text-white">লিঙ্কগুলো লক করা আছে</h3>
+                    <p class="text-white/70">বিজ্ঞাপনটি সম্পূর্ণ দেখে লিঙ্কগুলো আনলক করুন।</p>
+                    <button id="unlock-btn" class="w-full bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg hover:bg-yellow-600 transition-all mt-4 text-lg">
+                        <i class="fa-solid fa-play mr-2"></i> বিজ্ঞাপন দেখে আনলক করুন
                     </button>
+                </div>
+                <!-- === লক ডিজাইন শেষ === -->
+
+                <div id="links-container" class="hidden w-full space-y-4 mt-6">
+                    <div class="space-y-2 text-left">
+                        <label class="font-semibold flex items-center gap-2 text-sm" style="color: var(--tg-text-color);"><i class="fa-solid fa-link" style="color: var(--tg-link-color);"></i> সরাসরি লিঙ্ক</label>
+                        <div class="flex">
+                            <input type="text" id="direct-link" readonly class="w-full p-3 rounded-l-md bg-black/20 border focus:outline-none focus:ring-2 transition-all" style="color: var(--tg-text-color); background-color: rgba(var(--tg-secondary-bg-rgb), 0.3); border-color: var(--tg-border-color); --tw-ring-color: var(--tg-link-color);">
+                            <button onclick="copyLink('direct-link')" class="text-white px-4 rounded-r-md transition-colors" style="background-color: var(--tg-button-color); color: var(--tg-button-text-color);"><i class="fa-regular fa-copy"></i></button>
+                        </div>
+                    </div>
+                    <div class="space-y-2 text-left">
+                        <label class="font-semibold flex items-center gap-2 text-sm" style="color: var(--tg-text-color);"><i class="fa-solid fa-code" style="color: var(--tg-link-color);"></i> HTML কোড</label>
+                        <div class="flex">
+                            <input type="text" id="html-link" readonly class="w-full p-3 rounded-l-md bg-black/20 border focus:outline-none focus:ring-2 transition-all" style="color: var(--tg-text-color); background-color: rgba(var(--tg-secondary-bg-rgb), 0.3); border-color: var(--tg-border-color); --tw-ring-color: var(--tg-link-color);">
+                            <button onclick="copyLink('html-link')" class="text-white px-4 rounded-r-md transition-colors" style="background-color: var(--tg-button-color); color: var(--tg-button-text-color);"><i class="fa-regular fa-copy"></i></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 
     <script>
-        // --- API Key ---
-        // IMPORTANT: Get your free API key from https://api.imgbb.com and paste it here.
-        const apiKey = '998c0b82ba2941d02d85d9132d9593a5'; // অনুগ্রহ করে এখানে আপনার ImgBB API Key যুক্ত করুন
+        // --- Configuration ---
+        const apiKey = '998c0b82ba2941d02d85d9132d9593a5';
 
         // --- DOM Elements ---
         const dropZone = document.getElementById('drop-zone');
         const fileInput = document.getElementById('file-input');
         const placeholderView = document.getElementById('placeholder-view');
         const resultsView = document.getElementById('results-view');
-        const previewArea = document.getElementById('preview-area');
         const imagePreview = document.getElementById('image-preview');
         const progressWrapper = document.getElementById('progress-wrapper');
         const progressBar = document.getElementById('progress-bar');
         const progressText = document.getElementById('progress-text');
+        const adLockContainer = document.getElementById('ad-lock-container');
+        const unlockBtn = document.getElementById('unlock-btn');
         const linksContainer = document.getElementById('links-container');
-        const resetBtn = document.getElementById('reset-btn');
         const copySuccessPopup = document.getElementById('copy-success-popup');
         
         let popupTimeout;
+        const tg = window.Telegram.WebApp;
+
+        // --- Ad Function ---
+        function showUnlockAd() {
+            if (typeof show_9528592 !== 'function') {
+                tg.showAlert('বিজ্ঞাপন লোড করা যায়নি। অনুগ্রহ করে আবার চেষ্টা করুন।');
+                return;
+            }
+            // ব্যবহারকারীকে জানানো যে বিজ্ঞাপন আসছে
+            tg.HapticFeedback.impactOccurred('light');
+            
+            show_9528592().then(() => {
+                // বিজ্ঞাপন সফলভাবে দেখার পর লিঙ্ক আনলক করা হবে
+                unlockLinks();
+            }).catch(e => {
+                console.error('Rewarded Ad Error:', e);
+                tg.showAlert('বিজ্ঞাপনটি দেখানো যায়নি। দয়া করে আবার চেষ্টা করুন।');
+            });
+        }
+
+        // --- Core Functions ---
+        function showResultsView() {
+            placeholderView.classList.add('hidden');
+            resultsView.classList.remove('hidden');
+            document.getElementById('preview-area').classList.remove('hidden');
+            progressWrapper.classList.remove('hidden');
+            // লিঙ্ক এবং লক কন্টেইনার দুটোই হাইড করা হলো শুরুতে
+            linksContainer.classList.add('hidden');
+            adLockContainer.classList.add('hidden');
+        }
+
+        function handleFile(file) {
+            if (file && file.type.startsWith('image/')) {
+                showResultsView();
+                const reader = new FileReader();
+                reader.onload = e => { imagePreview.src = e.target.result; uploadFile(file); };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function uploadFile(file) {
+            const formData = new FormData();
+            formData.append('image', file);
+            progressText.textContent = 'আপলোড হচ্ছে...';
+            progressBar.style.width = '0%';
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', `https://api.imgbb.com/1/upload?key=${apiKey}`, true);
+            xhr.upload.onprogress = e => {
+                if (e.lengthComputable) {
+                    const percent = Math.round((e.loaded / e.total) * 100);
+                    progressBar.style.width = `${percent}%`;
+                    progressText.textContent = `আপলোড হচ্ছে... ${percent}%`;
+                }
+            };
+            xhr.onload = function() {
+                if (this.status === 200) {
+                    const res = JSON.parse(this.responseText);
+                    if (res.success) { displayLockedResults(res.data); } else { tg.showAlert('আপলোড ব্যর্থ: ' + res.error?.message); resetUI(); }
+                } else { tg.showAlert('সার্ভার এরর: ' + this.status); resetUI(); }
+            };
+            xhr.send(formData);
+        }
+        
+        function displayLockedResults(data) {
+            tg.HapticFeedback.notificationOccurred('success');
+            progressWrapper.classList.add('hidden');
+            progressText.textContent = 'সফলভাবে আপলোড হয়েছে!';
+            
+            // লিঙ্কগুলো ইনপুটে সেট করা হলো, কিন্তু লিঙ্ক কন্টেইনারটি হাইড থাকবে
+            document.getElementById('direct-link').value = data.url;
+            document.getElementById('html-link').value = `<img src="${data.url}" alt="image">`;
+            
+            // লক কন্টেইনারটি দেখানো হলো
+            adLockContainer.classList.remove('hidden');
+
+            // টেলিগ্রামের মেইন বাটন সেট করা হলো
+            tg.MainButton.setText('অন্য ছবি আপলোড করুন');
+            tg.MainButton.onClick(resetUI);
+            tg.MainButton.show();
+        }
+
+        function unlockLinks() {
+            tg.HapticFeedback.notificationOccurred('success');
+            adLockContainer.classList.add('hidden'); // লক কন্টেইনার হাইড করা হলো
+            linksContainer.classList.remove('hidden'); // আসল লিঙ্ক কন্টেইনার দেখানো হলো
+            tg.showAlert('ধন্যবাদ! আপনার লিঙ্কগুলো এখন আনলক করা হয়েছে।');
+        }
+        
+        function copyLink(elementId) {
+            const input = document.getElementById(elementId);
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(input.value).then(() => {
+                    showCopySuccessPopup();
+                    tg.HapticFeedback.notificationOccurred('success');
+                }).catch(err => { tg.showAlert('কপি করা যায়নি।'); });
+            }
+        }
+        
+        function showCopySuccessPopup() {
+            copySuccessPopup.classList.remove('-translate-y-full');
+            copySuccessPopup.classList.add('translate-y-5');
+            clearTimeout(popupTimeout);
+            popupTimeout = setTimeout(() => {
+                copySuccessPopup.classList.remove('-translate-y-5');
+                copySuccessPopup.classList.add('-translate-y-full');
+            }, 3000);
+        }
+
+        function resetUI() {
+            fileInput.value = '';
+            progressBar.style.width = '0%';
+            progressText.textContent = '';
+            imagePreview.src = '';
+            resultsView.classList.add('hidden');
+            placeholderView.classList.remove('hidden');
+            adLockContainer.classList.add('hidden');
+            linksContainer.classList.add('hidden');
+            tg.MainButton.hide();
+        }
+
+        function setupTelegramIntegration() {
+            tg.ready();
+            tg.expand();
+            // থিম এবং অন্যান্য ইন্টিগ্রেশন কোড এখানে থাকবে
+            const applyTheme = (themeParams) => {
+                const root = document.documentElement;
+                root.style.setProperty('--tg-bg-color', themeParams.bg_color || '#0f0c29');
+                root.style.setProperty('--tg-text-color', themeParams.text_color || '#ffffff');
+                // ... বাকি থিম কোড ...
+            };
+            applyTheme(tg.themeParams);
+            tg.onEvent('themeChanged', () => applyTheme(tg.themeParams));
+            tg.MainButton.hide();
+        }
 
         // --- Event Listeners ---
         dropZone.addEventListener('click', () => fileInput.click());
@@ -151,120 +269,11 @@
             dropZone.classList.remove('border-blue-400', 'bg-white/10');
             handleFile(e.dataTransfer.files[0]);
         });
-        resetBtn.addEventListener('click', resetUI);
-
-        // --- Core Functions ---
-        function showResultsView() {
-            placeholderView.classList.add('hidden');
-            resultsView.classList.remove('hidden');
-            previewArea.classList.remove('hidden');
-            progressWrapper.classList.remove('hidden');
-            linksContainer.classList.add('hidden');
-        }
-
-        function handleFile(file) {
-            if (!apiKey || apiKey === 'YOUR_API_KEY_HERE') {
-                alert('অনুগ্রহ করে স্ক্রিপ্টে আপনার ImgBB API Key যুক্ত করুন।');
-                return;
-            }
-            if (file && file.type.startsWith('image/')) {
-                showResultsView();
-                const reader = new FileReader();
-                reader.onload = e => {
-                    imagePreview.src = e.target.result;
-                    uploadFile(file);
-                };
-                reader.readAsDataURL(file);
-            }
-        }
         
-        function uploadFile(file) {
-            const formData = new FormData();
-            formData.append('image', file);
-            progressText.textContent = 'আপলোড হচ্ছে...';
+        // "আনলক করুন" বাটনের জন্য ইভেন্ট লিসেনার
+        unlockBtn.addEventListener('click', showUnlockAd);
 
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', `https://api.imgbb.com/1/upload?key=${apiKey}`, true);
-            
-            xhr.upload.onprogress = e => {
-                if (e.lengthComputable) {
-                    const percent = Math.round((e.loaded / e.total) * 100);
-                    progressBar.style.width = `${percent}%`;
-                    progressText.textContent = `আপলোড হচ্ছে... ${percent}%`;
-                }
-            };
-            
-            xhr.onload = function() {
-                if (this.status === 200) {
-                    const res = JSON.parse(this.responseText);
-                    if (res.success) {
-                        displayResults(res.data);
-                    } else {
-                        alert('আপলোড ব্যর্থ: ' + res.error?.message);
-                        resetUI();
-                    }
-                } else {
-                    alert('সার্ভার এরর: ' + this.status);
-                    resetUI();
-                }
-            };
-            xhr.send(formData);
-        }
-        
-        function displayResults(data) {
-            progressWrapper.classList.add('hidden');
-            progressText.textContent = 'সফলভাবে আপলোড হয়েছে!';
-            
-            document.getElementById('direct-link').value = data.url;
-            document.getElementById('html-link').value = `<img src="${data.url}" alt="image">`;
-            
-            linksContainer.classList.remove('hidden');
-        }
-        
-        // --- UPDATED AND FIXED copyLink FUNCTION ---
-        function copyLink(elementId) {
-            const input = document.getElementById(elementId);
-            
-            // Modern clipboard API for secure contexts (HTTPS, localhost)
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(input.value).then(showCopySuccessPopup);
-            } else {
-                // Fallback for insecure contexts (like file://) or older browsers
-                input.select();
-                input.setSelectionRange(0, 99999); // For mobile devices
-                try {
-                    document.execCommand('copy');
-                    showCopySuccessPopup(); // Show success even on fallback
-                } catch (err) {
-                    console.error('Fallback copy failed:', err);
-                    alert('দুঃখিত, লিঙ্কটি কপি করা যায়নি।');
-                }
-                // Deselect the text after copying
-                window.getSelection().removeAllRanges();
-            }
-        }
-        
-        // Helper function to show the popup
-        function showCopySuccessPopup() {
-            copySuccessPopup.classList.remove('-translate-y-full');
-            copySuccessPopup.classList.add('translate-y-5');
-            clearTimeout(popupTimeout);
-            popupTimeout = setTimeout(() => {
-                copySuccessPopup.classList.remove('translate-y-5');
-                copySuccessPopup.classList.add('-translate-y-full');
-            }, 3000);
-        }
-
-        function resetUI() {
-            fileInput.value = '';
-            progressBar.style.width = '0%';
-            progressText.textContent = '';
-            imagePreview.src = '';
-            
-            resultsView.classList.add('hidden');
-            placeholderView.classList.remove('hidden');
-        }
+        setupTelegramIntegration();
     </script>
-
 </body>
 </html>
